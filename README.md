@@ -1,2 +1,2 @@
 # Neural Network
-Basic neural network for future applications
+Basic Neural Network in Java for future applications
