@@ -65,6 +65,19 @@ public class Matrix {
     }
 
     /**
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+
+    public static float[] multiply(float a, float[] b){
+        float[] c = new float[b.length];
+        for(int i = 0; i < c.length; i++) c[i] = a*b[i];
+        return c;
+    }
+
+    /**
      * Returns a matrix with the result of scaling multiplying both matrices
      * @param a fist matrix
      * @param b second matrix
@@ -152,6 +165,23 @@ public class Matrix {
                 c[i][j] = a[i][j] + b[i][j];
             }
         }
+        return c;
+    }
+
+    /**
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+
+    public static float[] sum(float[] a, float[] b){
+        if(a.length != b.length) throw new IllegalArgumentException("Both arrays must have the same size");
+
+        float[] c = new float[a.length];
+
+        for(int i = 0; i < a.length; i++) c[i] = a[i] + b[i];
+
         return c;
     }
 

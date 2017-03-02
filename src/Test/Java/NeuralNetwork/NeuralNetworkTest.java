@@ -45,12 +45,48 @@ public class NeuralNetworkTest {
 
         float[] numgrad = new float[9];
         float[] pertub = new float[9];
-        float[] params = nn.getParams();
+        float[] paramsInit = nn.getParams();
         float epsilon = (float) Math.pow(10, -4);
 
-        for(int i = 0; i < params.length; i++){
+        for(int i = 0; i < 9; i++){
+            pertub[i] = epsilon;
+            nn.setParams(Matrix.sum(paramsInit, pertub));
+            float loss2 = nn.backpropagation(X, y);
 
+            nn.setParams(Matrix.sum(paramsInit, Matrix.multiply(-1, pertub)));
+            float loss1 = nn.backpropagation(X, y);
+
+            numgrad[i] = ((loss2 - loss1) / (2*epsilon));
+
+            pertub[i] = 0;
         }
+
+        nn.setParams(paramsInit);
+
+        for(int i = 0; i < numgrad.length; i++){
+            System.out.println(numgrad[i]);
+        }
+
+        System.out.println();
+
+        for(int i = 0; i < numgrad.length; i++){
+            System.out.println(concatenate[i]);
+        }
+
+        System.out.println();
+
+        System.out.println(norm(Matrix.sum(concatenate,Matrix.multiply(-1,numgrad)))/norm(Matrix.sum(concatenate,numgrad)));
+    }
+
+
+    public float norm(float[] a){
+        float result = 0;
+
+        for(float p: a){
+            result += Math.pow(p, 2);
+        }
+
+        return (float) Math.sqrt(result);
     }
 
 }
