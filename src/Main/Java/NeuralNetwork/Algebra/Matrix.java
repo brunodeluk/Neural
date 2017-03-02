@@ -1,9 +1,6 @@
 package NeuralNetwork.Algebra;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.Queue;
-import java.util.TreeMap;
 import java.util.stream.Stream;
 
 /**
@@ -75,8 +72,8 @@ public class Matrix {
      */
 
     public static float[][] scalarMultiply(float[][] a, float[][] b){
-        float[] aVec = toVector(a);
-        float[] bVec = toVector(b);
+        float[] aVec = toArray(a);
+        float[] bVec = toArray(b);
 
         float[][] c = new float[aVec.length][1];
 
@@ -88,14 +85,14 @@ public class Matrix {
     }
 
     /**
-     * Returns a matrix transformed into a vector. If has more than one dimension
+     * Returns a matrix transformed into an array. If has more than one dimension
      * it throws an exception. It transposes the matrix so it is always columned.
      * @param x the matrix
-     * @return a vector
+     * @return an array
      */
 
 
-    public static float[] toVector(float[][] x){
+    public static float[] toArray(float[][] x){
         if((x[0].length > 1) && (x.length > 1)) throw new IllegalArgumentException("Invalid matrix");
         if(x[0].length > 1) x = transpose(x);
 
@@ -109,6 +106,28 @@ public class Matrix {
 
         return c;
     }
+
+    /**
+     *
+     * @param a
+     * @return
+     */
+
+    public static float[] ravel(float[][] a) {
+        float[] c = new float[a.length * a[0].length];
+
+        int count = 0;
+
+        for(int i = 0; i < a.length; i++){
+            for(int j = 0; j < a[0].length; j++){
+                c[count] = a[i][j];
+                count++;
+            }
+        }
+
+        return c;
+    }
+
 
     /**
      * Returns the sum of two matrices. If the rows and columns of both matrices don't
@@ -155,6 +174,21 @@ public class Matrix {
                 c[j][i] = a[i][j];
             }
         }
+        return c;
+    }
+
+    /**
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+
+    public static float[] concatenate(float[] a, float[] b){
+        float[] c = new float[a.length + b.length];
+        for(int i = 0; i < a.length; i++) c[i] = a[i];
+        for(int i = 0; i < b.length; i++) c[a.length + i] = b[i];
+
         return c;
     }
 

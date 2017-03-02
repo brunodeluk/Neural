@@ -159,7 +159,7 @@ public class NeuralNetwork {
      * @return matrix with the values of each cost
      */
 
-    private float costFunction(float y, float yHat){
+    public float costFunction(float y, float yHat){
         return (float) (0.5f*Math.pow(y - yHat, 2));
     }
 
@@ -189,6 +189,35 @@ public class NeuralNetwork {
 
         float[][][] c = {d2, d3};
         return c;
+    }
+
+    public float[] getParams(){
+        return Matrix.concatenate(Matrix.ravel(w1), Matrix.ravel(w2));
+    }
+
+    public void setParams(float[] params){
+        float[][] w1 = new float[2][3];
+
+        int count = 0;
+
+        for(int i = 0; i < w1.length; i++){
+            for(int j = 0; j < w1[0].length; j++){
+                w1[i][j] = params[count];
+                count++;
+            }
+        }
+
+        this.w1 = w1;
+
+        float[][] w2 = new float[3][1];
+
+        for(int i = 0; i < w2.length; i++){
+            for(int j = 0; j < w2[0].length; j++){
+                w2[i][j] = params[count];
+            }
+        }
+
+        this.w2 = w2;
     }
 
 }

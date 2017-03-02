@@ -35,7 +35,7 @@ public class MatrixTest {
     @Test
     public void toVectorWithColumnedMatrix() throws Exception {
         float[][] c = {{1},{2},{3}};
-        float[] result = Matrix.toVector(c);
+        float[] result = Matrix.toArray(c);
 
         float[] compare = {1,2,3};
 
@@ -45,7 +45,7 @@ public class MatrixTest {
     @Test
     public void toVectorNotColumn() throws Exception {
         float[][] c = {{1,2,3}};
-        float[] result = Matrix.toVector(c);
+        float[] result = Matrix.toArray(c);
 
         float[] compare = {1,2,3};
 
@@ -55,7 +55,7 @@ public class MatrixTest {
     @Test
     public void toVectorExceptionError() throws Exception {
         float[][] c = {{1,2,3}, {1,2,3}, {1,2,3}};
-        float[] result = Matrix.toVector(c);
+        float[] result = Matrix.toArray(c);
     }
 
     @Test
@@ -70,6 +70,29 @@ public class MatrixTest {
     @Test
     public void printMatrix() throws Exception {
 
+    }
+
+    @Test
+    public void concatenate() throws Exception {
+        float[][] a = {{1,2}, {3,4}};
+        float[][] b = {{5,4},{9,0}};
+
+        float[] ap = Matrix.ravel(a);
+        float[] bp = Matrix.ravel(b);
+
+        float[] p = Matrix.concatenate(ap, bp);
+        float[] result = {1,2,3,4,5,4,9,0};
+        assertTrue(Arrays.equals(result, p));
+    }
+
+    @Test
+    public void ravel() throws Exception {
+        float[][] a = {{1,2}, {3,4}};
+
+        float[] c = Matrix.ravel(a);
+        float[] result = {1,2,3,4};
+
+        assertTrue(Arrays.equals(result, c));
     }
 
 }
